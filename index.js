@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require('cors');
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 require('dotenv').config();
 
 
@@ -32,7 +32,13 @@ async function run() {
             res.send(result);
         });
 
-        
+         // delete my task-----------
+         app.delete('/myTask/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) };
+            const result = await addTaskCollection.deleteOne(query);
+            res.send(result);
+        });
 
 
 
