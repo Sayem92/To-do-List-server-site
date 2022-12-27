@@ -21,10 +21,18 @@ async function run() {
         // add task data save---
         app.post('/addTask', async (req, res) => {
             const addTask = req.body;
-            console.log(addTask);
             const result = await addTaskCollection.insertOne(addTask);
             res.send(result);
         });
+
+        // get my task data ---
+        app.get('/myTask', async (req, res) => {
+            const query = {};
+            const result = await addTaskCollection.find(query).toArray();
+            res.send(result);
+        });
+
+        
 
 
 
