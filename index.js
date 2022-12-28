@@ -32,15 +32,40 @@ async function run() {
             res.send(result);
         });
 
-         // delete my task-----------
-         app.delete('/myTask/:id', async (req, res) => {
+        // get my task single data ---
+        app.get('/myTask/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) }
+            const result = await addTaskCollection.findOne(query)
+            res.send(result);
+        });
+
+        // delete my task-----------
+        app.delete('/myTask/:id', async (req, res) => {
             const id = req.params.id;
             const query = { _id: ObjectId(id) };
             const result = await addTaskCollection.deleteOne(query);
             res.send(result);
         });
 
+        // update task  ------------------------------
+        app.put('/addTask/:id', async (req, res) => {
+            const id = req.params.id;
+            const addTask = req.body;
+            const filter = { _id: ObjectId(id)}
+            const options = { upsert: true }
+            const updateDoc = {
+                $set: addTask,
+            }
+            const result = await addTaskCollection.updateOne(filter, updateDoc, options)
+            res.send(result)
+        });
 
+
+
+
+
+        
 
     }
     catch (err) {
