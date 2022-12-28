@@ -26,8 +26,10 @@ async function run() {
         });
 
         // get my task data ---
-        app.get('/myTask', async (req, res) => {
-            const query = {};
+        app.get('/myTask/:email', async (req, res) => {
+            const email = req.params.email;
+            console.log(email);
+            const query = { email };
             const result = await addTaskCollection.find(query).toArray();
             res.send(result);
         });
@@ -52,7 +54,7 @@ async function run() {
         app.put('/addTask/:id', async (req, res) => {
             const id = req.params.id;
             const addTask = req.body;
-            const filter = { _id: ObjectId(id)}
+            const filter = { _id: ObjectId(id) }
             const options = { upsert: true }
             const updateDoc = {
                 $set: addTask,
@@ -65,7 +67,7 @@ async function run() {
 
 
 
-        
+
 
     }
     catch (err) {
