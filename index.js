@@ -33,8 +33,16 @@ async function run() {
             res.send(result);
         });
 
-        // get my task single data ---
-        app.get('/myTask/:id', async (req, res) => {
+        // get task data for data---
+        app.get('/updateTask/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) }
+            const result = await addTaskCollection.findOne(query)
+            res.send(result);
+        });
+
+        // get my task details ---
+        app.get('/details/:id', async (req, res) => {
             const id = req.params.id;
             const query = { _id: ObjectId(id) }
             const result = await addTaskCollection.findOne(query)
